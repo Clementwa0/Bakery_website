@@ -1,35 +1,30 @@
+'use client'
 import Link from "next/link";
-import { FaBars } from "react-icons/fa";
+import { useState } from 'react';
+import { FaBars, FaTimes } from 'react-icons/fa';
 
 const Navbar = () => {
+    const [isOpen, setIsOpen] = useState(false);
 
-  return (
-    <div className="relative mx-auto flex max-w-screen-lg items-center justify-between flex-col py-4 sm:flex">
-      <a className="flex items-center text-2xl font-bold text-gray-800">
-        <span className="mr-2 ">
-        <Link href="/">🍞 Sweet Bakes</Link>
-      </span>
-     </a><input className="peer hidden " type="checkbox" id="navbar-open" /><label className="absolute mt-1 text-xl cursor-pointer bg-black " for='navbar-open'>
-        <FaBars className="w-37 h-37" />
-      </label>
-      <nav className="peer-checked:block hidden py-4 sm:block sm:py-0">
-
-        <ul className="hidden md:flex space-x-6 text-lg text-gray-700">
-          <li>
-            <Link href="/" className="hover:text-orange-500">Home</Link>
-          </li>
-          <li>
-            <Link href="/menu" className="hover:text-orange-500">Menu</Link>
-          </li>
-          <li>
-            <Link href="/about" className="hover:text-orange-500">About</Link>
-          </li>
-          <li>
-            <Link href="/contact" className="hover:text-orange-500">Contact</Link>
-          </li>
-        </ul>
-      </nav>
-    </div>
+    return (
+            <nav className="absolute top-0 left-0 w-full bg-black/50 p-4 flex justify-between items-center z-50">
+                <Link href="/" className="text-white text-2xl font-bold">Bakery</Link>
+                <div className="hidden md:flex space-x-6">
+                    <Link href="/menu" className="text-white hover:text-yellow-400">Menu</Link>
+                    <Link href="/about" className="text-white hover:text-yellow-400">About</Link>
+                    <Link href="/contact" className="text-white hover:text-yellow-400">Contact</Link>
+                </div>
+                <button className="md:hidden text-white" onClick={() => setIsOpen(!isOpen)}>
+                    {isOpen ? <FaTimes size={28} /> : <FaBars size={28} />}
+                </button>
+                {isOpen && (
+                <div className="absolute rounded-md top-16 right-0 w-1/4 bg-gradient-to-r from-indigo-500 to-pink-500 p-6 flex flex-col items-center space-y-4 text-white md:hidden">
+                    <Link href="/menu" className="hover:text-yellow-400" onClick={() => setIsOpen(false)}>Menu</Link>
+                    <Link href="/about" className="hover:text-yellow-400" onClick={() => setIsOpen(false)}>About</Link>
+                    <Link href="/contact" className="hover:text-yellow-400" onClick={() => setIsOpen(false)}>Contact</Link>
+                </div>
+            )}
+            </nav>
   );
 };
 
